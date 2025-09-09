@@ -1,200 +1,168 @@
-﻿/* ========== 共通レイアウト ========== */
-body {
-  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-  color: #333;
-  background: #fff;
+﻿:root {
+  --main-text: #000;
+  --sub-text: #333;
+  --accent: #000;
+  --accent-light: #666;
+  --border: #ddd;
+  --bg-light: #f7f7f7;
 }
 
-.wrapper {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* ベース */
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  margin: 0;
+  color: var(--sub-text);
+  background: #fff;
+  line-height: 1.6;
 }
+.wrapper { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
 h1, h2, h3 {
-  margin: 20px 0;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--main-text);
 }
+h1#logo { text-align: center; font-size: 2rem; margin-top: 40px; }
+h1#logo span { display: block; font-size: 1rem; color: #666; margin-top: 5px; }
 
-h1#logo {
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 40px;
-}
-
-h1#logo span {
-  display: block;
-  font-size: 1rem;
-  color: #666;
-  margin-top: 5px;
-}
-
+/* 共通の h2（左線あり・モノクロ） */
 h2 {
-  border-left: 6px solid #007acc;
+  border-left: 6px solid var(--accent);
   padding-left: 10px;
   font-size: 1.5rem;
   margin-top: 60px;
+  background: linear-gradient(to right, var(--bg-light), #fff);
 }
 
-h3 {
-  font-size: 1.2rem;
-  margin: 15px 0 10px;
+
+#about h2 {
+  border-left: none;         
+  background: #eee;           
+  display: inline-block;      
+  padding: 6px 12px;          
+  border-radius: 6px;         
+  margin-bottom: 20px;
+  color: #000;                
 }
 
-/* ========== ナビゲーションバー ========== */
+/* ナビゲーション（モノクロ） */
 .navbar {
-  background: #333;
-  padding: 10px 0;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
-
 .navbar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
+  list-style: none; margin: 0; padding: 0;
+  display: flex; justify-content: center; gap: 30px;
 }
-
-.navbar li {
-  display: inline;
-}
-
 .navbar a {
-  text-decoration: none;
-  color: #fff;
-  font-weight: bold;
-  transition: color 0.3s;
+  text-decoration: none; color: var(--main-text);
+  font-weight: bold; transition: color .3s;
+  padding: 8px 10px;
+}
+.navbar a:hover { color: var(--accent-light); }
+
+/* About / Contact セクション本体（背景と上下の細線） */
+#about, #contact {
+  background: var(--bg-light);
+  text-align: center;
+  padding: 60px 20px;
+  margin: 40px 0;
+  border-top: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+#contact { padding: 40px 20px; }
+
+/* スクロールのズレ防止（stickyナビ対策） */
+#hp, #design, #movie, #about, #contact { scroll-margin-top: 80px; }
+
+/* 作品グリッド（自動段組み） */
+#hp, #design, #movie {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  align-items: stretch;
 }
 
-.navbar a:hover {
-  color: #f39c12;
-}
-
-/* ========== 作品カード ========== */
+/* 作品カード */
 .dsp_box {
   background: #fff;
   border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
-  transition: transform 0.3s;
+  padding: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform .3s, box-shadow .3s;
 }
-
 .dsp_box:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
 }
-
 .dsp_box img {
-  display: block;
-  margin: 0 auto 10px;
-  border-radius: 6px;
-  max-width: 300px;
-  height: auto;
-}
-
-.dsp {
-  font-size: 0.95rem;
-  margin: 8px 0;
-}
-
-.lnk a {
-  color: #007acc;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.lnk a:hover {
-  text-decoration: underline;
-}
-
-/* ========== 動画サムネイル（YouTube風） ========== */
-.video-thumb {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.video-thumb img {
   width: 100%;
-  max-width: 300px;
-  display: block;
-  transition: transform 0.3s ease;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
-.video-thumb:hover img {
-  transform: scale(1.05);
+/* Movie だけ 16:9 で統一 */
+#movie .dsp_box img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
+/* 動画の再生ボタン（モノクロ） */
+.video-thumb { position: relative; display: block; border-radius: 8px; overflow: hidden; }
 .play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
-  background: red;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.85;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 70px; height: 70px; background: rgba(0,0,0,0.85);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
 }
-
 .play-button::before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 22px solid white;
+  content: ""; width: 0; height: 0;
+  border-left: 22px solid #fff;
   border-top: 14px solid transparent;
   border-bottom: 14px solid transparent;
   margin-left: 5px;
 }
 
-.video-thumb:hover .play-button {
-  opacity: 1;
+/* テキストとリンク */
+.dsp { font-size: .95rem; margin: 6px 0; }
+.lnk a {
+  color: var(--main-text);
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color .25s;
 }
+.lnk a:hover { border-color: var(--accent-light); }
 
-/* ========== Contact ========== */
-#contact {
-  text-align: center;
-  padding: 40px 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin: 40px 0;
-}
-
+/* Contact ボタン（モノクロ） */
 .mail-btn {
   display: inline-block;
-  background: #007acc;
+  background: #000;
   color: #fff;
-  padding: 14px 32px;   /* 大きめで目立つ */
-  border-radius: 6px;
+  padding: 14px 32px;
+  border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 1.1rem;    /* 文字も大きめ */
-  transition: background 0.3s;
+  font-size: 1.1rem;
+  transition: background .3s, transform .2s;
 }
-
 .mail-btn:hover {
-  background: #005fa3;
+  background: #333;
+  transform: scale(1.05);
 }
 
-/* ========== フッター ========== */
+/* フッター */
 footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.85rem;
-  color: #666;
-  border-top: 1px solid #ccc;
-  margin-top: 40px;
+  text-align: center; padding: 20px;
+  font-size: .85rem; color: #666; border-top: 1px solid #ccc; margin-top: 40px;
+}
+
+/* アクセシビリティ（キーボード操作） */
+:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 3px;
 }
