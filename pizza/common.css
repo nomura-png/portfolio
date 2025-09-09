@@ -1,0 +1,39 @@
+﻿*{
+margin:0;
+padding:0;
+}
+.wrapper{
+width:900px;
+margin:auto;
+background-color:#FFFFCC;
+}
+
+p{
+font-size:14px;
+}
+
+.menu{
+float:left;
+border:solid 1px #008800;
+margin:10px 5px;
+text-align:center;
+width:213px;
+}
+
+.menu p{
+margin-top:10px;
+margin-bottom:10px;
+}
+.pris{
+color:red;
+}
+
+.kaijyo{
+clear:both;
+}
+
+.copy{
+text-align:center;
+font-size:14px;
+padding:5px;
+}
